@@ -7,9 +7,12 @@ using TMPro;
 public class ConsoleInput : MonoBehaviour
 {
     public TMP_InputField consoleField;
+    public TextMeshProUGUI outputText;
+    private Commands commands;
     void Start()
     {
         consoleField.Select();
+        commands = GetComponent<Commands>();
     }
 
     void Update()
@@ -20,6 +23,8 @@ public class ConsoleInput : MonoBehaviour
         }
         if (Input.GetKeyDown(KeyCode.Return))
         {
+            outputText.text += "\n>" + consoleField.text;
+            commands.checkCommand(consoleField.text);
             consoleField.text = "";
             consoleField.ActivateInputField();
             consoleField.Select();
@@ -27,8 +32,11 @@ public class ConsoleInput : MonoBehaviour
 
     }
 
-    public void Reselect()
+    public void Output(string outputString)
     {
-        
+        Debug.Log("Outputting, outputString = " + outputString);
+        outputText.text += "\n" + outputString;
+
     }
+
 }
